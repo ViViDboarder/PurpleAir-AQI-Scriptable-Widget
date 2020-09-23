@@ -32,49 +32,91 @@ const levelAttributes = [
   {
     threshold: 300,
     label: "Hazardous",
-    startColor: "9e2043",
-    endColor: "7e0023",
-    textColor: "ffffff",
+    lightColors: {
+      startColor: "9e2043",
+      endColor: "7e0023",
+      textColor: "ffffff",
+    },
+    darkColors: {
+      startColor: "9e2043",
+      endColor: "7e0023",
+      textColor: "ffffff",
+    },
     textSize: "20",
   },
   {
     threshold: 200,
     label: "Very Unhealthy",
-    startColor: "8f3f97",
-    endColor: "6f1f77",
-    textColor: "ffffff",
+    lightColors: {
+      startColor: "8f3f97",
+      endColor: "6f1f77",
+      textColor: "ffffff",
+    },
+    darkColors: {
+      startColor: "8f3f97",
+      endColor: "6f1f77",
+      textColor: "ffffff",
+    },
     textSize: 15,
  },
   {
     threshold: 150,
     label: "Unhealthy",
-    startColor: "FF3D3D",
-    endColor: "D60000",
-    textColor: "000000",
+    lightColors: {
+      startColor: "FF3D3D",
+      endColor: "D60000",
+      textColor: "000000",
+    },
+    darkColors: {
+      startColor: "FF3D3D",
+      endColor: "D60000",
+      textColor: "000000",
+    },
     textSize: 20,
   },
   {
     threshold: 100,
     label: "Unhealthy (S.G.)",
-    startColor: "FFA63D",
-    endColor: "D67200",
-    textColor: "000000",
+    lightColors: {
+      startColor: "FFA63D",
+      endColor: "D67200",
+      textColor: "000000",
+    },
+    darkColors: {
+      startColor: "FFA63D",
+      endColor: "D67200",
+      textColor: "000000",
+    },
     textSize: 15,
   },
   {
     threshold: 50,
     label: "Moderate",
-    startColor: "ffff00",
-    endColor: "cccc00",
-    textColor: "000000",
+    lightColors: {
+      startColor: "ffff00",
+      endColor: "cccc00",
+      textColor: "000000",
+    },
+    darkColors: {
+      startColor: "ffff00",
+      endColor: "cccc00",
+      textColor: "000000",
+    },
     textSize: 20,
   },
   {
     threshold: 0,
     label: "Good",
-    startColor: "00e400",
-    endColor: "00bb00",
-    textColor: "000000",
+    lightColors: {
+      startColor: "ffffff",
+      endColor: "ffffff",
+      textColor: "00e400",
+    },
+    darkColors: {
+      startColor: "000000",
+      endColor: "000000",
+      textColor: "00e400",
+    },
     textSize: 20,
   },
 ];
@@ -187,10 +229,16 @@ async function run() {
     let aqiText = aqi.toString();
     console.log(aqi);
     console.log(level.level);
-
-    let startColor = new Color(level.startColor);
-    let endColor = new Color(level.endColor);
-    let textColor = new Color(level.textColor);
+    
+    var themeColors = null;
+    if (Device.isUsingDarkAppearance()) {
+      themeColors = level.darkColors;
+    } else {
+      themeColors = level.lightColors;
+    }
+    let startColor = new Color(themeColors.startColor);
+    let endColor = new Color(themeColors.endColor);
+    let textColor = new Color(themeColors.textColor);
     let gradient = new LinearGradient();
     gradient.colors = [startColor, endColor];
     gradient.locations = [0.0, 1];
